@@ -6,6 +6,8 @@ const adminRoutes = require('./routes/admin');  // Import route admin.js
 
 dotenv.config();
 const app = express();
+app.use(express.static('public'));  // Đảm bảo 'public' là thư mục chứa các tệp tĩnh (HTML, CSS, JS)
+
 
 // Cấu hình EJS làm view engine
 app.set('view engine', 'ejs');
