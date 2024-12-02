@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tours List</title>
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .table {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .btn-success {
+            margin-bottom: 20px;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .tour-price {
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        .date-column {
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-5">List of Tours</h1>
+        <a href="/admin/add-tour" class="btn btn-success">Thêm Tour</a>
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Created At</th>  <!-- Thêm cột Created At -->
+                    <th>Updated At</th>  <!-- Thêm cột Updated At -->
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (tours && tours.length > 0) { %>
+                    <% tours.forEach((tour, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><img src="<%= tour.image %>" alt="<%= tour.title %>"></td>
+                            <td><%= tour.title %></td>
+                            <td><%= tour.description %></td>
+                            <td class="tour-price">$<%= tour.price %></td>
+                            <td class="date-column"><%= tour.createdAt.toLocaleDateString() %> <%= tour.createdAt.toLocaleTimeString() %></td> <!-- Hiển thị thời gian tạo -->
+                            <td class="date-column"><%= tour.updatedAt.toLocaleDateString() %> <%= tour.updatedAt.toLocaleTimeString() %></td> <!-- Hiển thị thời gian cập nhật -->
+                            <td>
+                                <a href="<%= tour.link %>" class="btn btn-primary btn-sm mb-2">link</a>
+                                <form action="/admin/delete-tour/<%= tour._id %>" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm">xóa</button>
+                                </form>
+                                <form action="/admin/edit-tour/<%= tour._id %>" method="GET" style="display:inline;">
+                                    <button type="submit" class="btn btn-warning btn-sm">Sửa</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="8">No tours available</td> <!-- Thêm số cột tương ứng -->
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
