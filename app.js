@@ -23,6 +23,10 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.error('MongoDB connection error: ', err));
 
+    // Route xử lý đường dẫn gốc '/'
+app.get('/', (req, res) => {
+    res.render('tours', { title: 'Home Page' }); // Render tệp views/index.ejs
+});
 // Routes
 app.use('/admin', adminRoutes);
  
